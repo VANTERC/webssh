@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+logs/
+run/
+.idea/
+.vscode/
+.eslintrc.js
+dist*

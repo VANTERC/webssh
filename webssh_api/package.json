@@ -1,0 +1,31 @@
+{
+  "name": "my-study-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "egg-bin dev --sticky",
+    "start": "egg-scripts start --daemon --sticky",
+    "stop": "egg-scripts stop"
+  },
+  "author": "VANTERC",
+  "license": "ISC",
+  "dependencies": {
+    "egg": "^2.27.0",
+    "egg-cors": "^2.2.3",
+    "egg-jwt": "^3.1.7",
+    "egg-mysql": "^3.0.0",
+    "egg-scripts": "^2.13.0",
+    "egg-sequelize": "^6.0.0",
+    "egg-socket.io": "^4.1.6",
+    "moment": "^2.29.1",
+    "mysql2": "^2.2.5",
+    "node-pty": "^0.9.0",
+    "ssh2": "^0.8.9",
+    "ssh2-sftp-client": "^5.3.2",
+    "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.15.0"
+  }
+}
