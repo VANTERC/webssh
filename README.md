@@ -13,8 +13,8 @@
 演示账号: admin/admin
 * 请不要随意修改账号密码
 ```
-![demo1](http://pyf.vanterc.com:8188/f/28338edb033c4acfa198/?dl=1)
-![demo2](http://pyf.vanterc.com:8188/f/45f665b2fe0044c1bce1/?dl=1)
+![demo1](https://github.com/VANTERC/webssh/blob/main/webssh1.png)
+![demo2](https://github.com/VANTERC/webssh/blob/main/webssh2.png)
 ## 环境
 
 * Vue 2.6.11
