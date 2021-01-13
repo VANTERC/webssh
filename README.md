@@ -1,1 +1,72 @@
-### webssh
+<h1 align="center">webssh</h1>
+
+<div align="center">
+
+一款基于vue+egg的web终端管理器，可实现基本的Linux服务器常规操作。
+
+</div>
+
+## 演示环境
+
+演示地址：http://webssh.vanterc.com
+```
+演示账号: admin/admin
+* 请不要随意修改账号密码
+```
+![demo1](http://pyf.vanterc.com:8188/f/28338edb033c4acfa198/?dl=1)
+![demo2](http://pyf.vanterc.com:8188/f/45f665b2fe0044c1bce1/?dl=1)
+## 环境
+
+* Vue 2.6.11
+* Ant Design Vue 1.6.4+
+* Node 12.16
+* Egg 2.27
+* Mysql 5.7+
+
+## 特性
+
+- **基于Node**: 基于JS开发，前后端分离，前端容易上手
+- **在线终端**: 主机支持浏览器在线终端登录
+- **文件管理**: 主机文件在线上传下载、创建文件夹、支持重命名
+- **安全管理**: 只保存服务器信息，不在任何地方保存服务器密码
+
+## 本地运行
+1. 准备好你的mysql数据库
+
+2. 在webssh_api/config/config.default.js 下配置您的数据库
+```
+mysql: {
+    // 单数据库信息配置
+    client: {
+      // 数据库地址
+      host: 'yourhost',
+      // 端口号
+      port: '3306',
+      // 用户名
+      user: 'root',
+      // 密码
+      password: 'yourpassword',
+      // 数据库名
+      database: 'webssh',
+    },
+  },
+  sequelize: {
+    dialect: 'mysql',
+    host: 'yourhost',
+    port: 3306,
+    database: 'webssh',
+    username: 'root',
+    password: 'yourpassword'
+  }
+```
+3. 进入webssh_api目录 运行服务端
+```
+npm run start
+```
+4. 进入webssh_web目录 运行客户端
+```
+npm run serve
+```
+
+## License & Copyright
+[AGPL-3.0](https://opensource.org/licenses/AGPL-3.0)
