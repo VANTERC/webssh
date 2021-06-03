@@ -31,7 +31,7 @@
 - **安全管理**: 只保存服务器信息，不在任何地方保存服务器密码
 
 ## 本地运行
-1. 准备好你的mysql数据库
+1. 准备好你的mysql数据库(新建一个Utf8字符集,名称为webssh的数据库,无需创建表，系统会自动创建)
 
 2. 在webssh_api/config/config.default.js 下配置您的数据库
 ```
@@ -61,10 +61,12 @@ mysql: {
 ```
 3. 进入webssh_api目录 运行服务端
 ```
+npm install
 npm run start
 ```
 4. 进入webssh_web目录 运行客户端
 ```
+npm install
 npm run serve
 ```
 
