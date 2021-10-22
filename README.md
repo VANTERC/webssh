@@ -33,31 +33,20 @@
 ## 本地运行
 1. 准备好你的mysql数据库(新建一个Utf8字符集,名称为webssh的数据库,无需创建表，系统会自动创建)
 
-2. 在webssh_api/config/config.default.js 下配置您的数据库
+2. 在webssh_api/config/configure.js 下配置您的数据库
 ```
-mysql: {
-    // 单数据库信息配置
-    client: {
-      // 数据库地址
-      host: 'yourhost',
-      // 端口号
-      port: '3306',
-      // 用户名
-      user: 'root',
-      // 密码
-      password: 'yourpassword',
-      // 数据库名
-      database: 'webssh',
-    },
-  },
-  sequelize: {
-    dialect: 'mysql',
-    host: 'yourhost',
-    port: 3306,
-    database: 'webssh',
-    username: 'root',
-    password: 'yourpassword'
-  }
+{
+  // 数据库地址
+  host:'172.0.0.1',
+  // 数据库端口
+  port: 3306,
+  // 数据库名称
+  database:'webssh',
+  // 账号
+  username: 'root',
+  // 密码
+  password:'password'
+}
 ```
 3. 进入webssh_api目录 运行服务端
 ```

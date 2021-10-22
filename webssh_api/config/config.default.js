@@ -1,4 +1,4 @@
-
+var configure = require( "./configure.js" );
 module.exports = {
   // 配置需要的中间件，数组顺序即为中间件的加载顺序
   // middleware: [ 'jwt' ],
@@ -20,15 +20,15 @@ module.exports = {
     // 单数据库信息配置
     client: {
       // host
-      host: 'localhost',
+      host: configure.host,
       // 端口号
-      port: '3306',
+      port: configure.port,
       // 用户名
-      user: 'root',
+      user: configure.username,
       // 密码
-      password: 'root@zxc123',
+      password: configure.password,
       // 数据库名
-      database: 'webssh',
+      database: configure.database,
     },
     // 是否加载到 app 上，默认开启
     app: true,
@@ -37,11 +37,11 @@ module.exports = {
   },
   sequelize: {
     dialect: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    database: 'webssh',
-    username: 'root',
-    password: 'root@zxc123',
+    host: configure.host,
+    port: configure.port,
+    database: configure.database,
+    username: configure.username,
+    password: configure.password,
     define: {
       // 使用自定义的表名
       freezeTableName: true,
@@ -59,7 +59,7 @@ module.exports = {
       enable: false,
       ignoreJSON: true
     },
-    domainWhiteList: ['http://localhost:3000','http://localhost:9999'],//允许访问接口的白名单
+    domainWhiteList: ['http://localhost:8077','http://localhost:3000','http://localhost:9999'],//允许访问接口的白名单
   },
   cors: {
     origin:'*', // 解决跨域问题
