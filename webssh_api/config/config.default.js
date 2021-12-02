@@ -42,6 +42,14 @@ module.exports = {
     database: configure.database,
     username: configure.username,
     password: configure.password,
+    dialectOptions: {
+      socketPath: '/tmp/mysql.sock' // 指定套接字文件路径
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000
+    },
     define: {
       // 使用自定义的表名
       freezeTableName: true,
