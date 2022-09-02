@@ -42,9 +42,6 @@ module.exports = {
     database: configure.database,
     username: configure.username,
     password: configure.password,
-    dialectOptions: {
-      socketPath: '/var/lib/mysql/mysql.sock' // 指定套接字文件路径
-    },
     pool: {
       max: 5,
       min: 0,
