@@ -3,11 +3,10 @@ const fs = require('fs')
 class filesController extends Controller {
   async readFiles() {
     const { ctx } = this;
-    const { id, path } = ctx.request.body;
+    const { id, path, pwd } = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.readFiles(retdata[0].host_ip,path,hostpwd,retdata[0].host_port,retdata[0].host_rootName);
+      const res = await ctx.service.ssh.readFiles(retdata[0].host_ip,path,pwd,retdata[0].host_port,retdata[0].host_rootName);
       let resultData = res.map(r=>{
         let t = r.longname.substring(0,1)
         return {
@@ -33,12 +32,11 @@ class filesController extends Controller {
 
   async uploadFile(){
     const { ctx } = this;
-    const { id,path } = ctx.request.body;
+    const { id,path,pwd } = ctx.request.body;
     const file = ctx.request.files[0]
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.uploadFile(file,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.uploadFile(file,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.body = {
           code: '200',
@@ -60,11 +58,10 @@ class filesController extends Controller {
 
   async downloadFile(){
     const { ctx } = this;
-    const { id,path,fileName } = ctx.request.body;
+    const { id,path,fileName,pwd } = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.downloadFile(fileName,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.downloadFile(fileName,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.attachment(fileName,{
           fallback:true,
@@ -93,11 +90,10 @@ class filesController extends Controller {
 
   async deleteFile(){
     const { ctx } = this;
-    const { id,path,fileName} = ctx.request.body;
+    const { id,path,fileName,pwd} = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.deleteFile(fileName,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.deleteFile(fileName,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.body = {
           code: '200',
@@ -119,11 +115,10 @@ class filesController extends Controller {
 
   async createDir(){
     const { ctx } = this;
-    const { id,path,dirName} = ctx.request.body;
+    const { id,path,dirName,pwd} = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.createDir(dirName,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.createDir(dirName,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.body = {
           code: '200',
@@ -145,11 +140,10 @@ class filesController extends Controller {
 
   async deleteDir(){
     const { ctx } = this;
-    const { id,path,dirName} = ctx.request.body;
+    const { id,path,dirName,pwd} = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.deleteDir(dirName,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.deleteDir(dirName,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.body = {
           code: '200',
@@ -171,11 +165,10 @@ class filesController extends Controller {
 
   async renameFileOrDir(){
     const { ctx } = this;
-    const { id,path,odlName,newName} = ctx.request.body;
+    const { id,path,odlName,newName,pwd} = ctx.request.body;
     let retdata = await ctx.service.host.getHostInfoById(id)
-    let hostpwd = ctx.helper.getHostpwd()
     if(retdata&&retdata.length>0){
-      const res = await ctx.service.ssh.renameFileOrDir(odlName,newName,path,retdata[0].host_ip,hostpwd,retdata[0].host_port,retdata[0].host_rootName)
+      const res = await ctx.service.ssh.renameFileOrDir(odlName,newName,path,retdata[0].host_ip,pwd,retdata[0].host_port,retdata[0].host_rootName)
       if(res===200){
         ctx.body = {
           code: '200',

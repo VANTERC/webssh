@@ -21,7 +21,6 @@
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "ssh2": "^1.11.0",
-    "ssh2-sftp-client": "^9.0.3",
     "utf8": "^3.0.0"
   },
   "devDependencies": {

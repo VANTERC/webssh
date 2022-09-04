@@ -7,7 +7,7 @@
     </a-button>
     </div>
     <TerminalConsole :id="id"></TerminalConsole>
-    <FilesManage :visible.sync="showFilesManage" :id="id"></FilesManage>
+    <FilesManage :visible.sync="showFilesManage" :id="id" :hostPassword="hostpwd"></FilesManage>
   </div>
 </template>
 
@@ -17,11 +17,18 @@
       return {
         hostInfo: '',
         id: null,
-        showFilesManage: false
+        showFilesManage: false,
+        hostpwd: ''
       };
     },
     created () {
       this.id = Number(this.$route.params.id);
+      let hostdata = JSON.parse(sessionStorage.HOSTDATA)
+      hostdata.map(r=>{
+        if(r.hostId === this.id){
+          this.hostpwd = r.password
+        }
+      })
       this.getHostInfo();
     },
     methods: {

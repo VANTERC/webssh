@@ -5,9 +5,6 @@ let utf8 = require("utf8");
 class XtermService extends Service {
   // 创建socket
   async create(socket,ip,password,port,username,cols,rows) {
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt(socket,key,iv,password)
     const conn = new Client();
       conn.on('ready', () => {
         socket.emit('shell-output', "\r\n***" + ip + " SSH CONNECTION ESTABLISHED ***\r\n")
@@ -42,7 +39,7 @@ class XtermService extends Service {
         host: ip,
         port: port,
         username: username,
-        password: pwd
+        password: password
       });
   }
 }

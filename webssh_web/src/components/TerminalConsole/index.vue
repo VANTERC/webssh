@@ -14,7 +14,8 @@ export default {
   data () {
     return {
       term: null,
-      socket: null
+      socket: null,
+      hostpwd: ''
     };
   },
   props: {
@@ -31,6 +32,13 @@ export default {
   },
   methods: {
     init (){
+      let hostdata = JSON.parse(sessionStorage.HOSTDATA)
+      hostdata.map(r=>{
+        if(r.hostId === this.id){
+          this.hostpwd = r.password
+        }
+      })
+
       this.term = new Terminal({
         cursorBlink: true, // 光标闪烁
         cols:3000
@@ -40,9 +48,12 @@ export default {
       let token = sessionStorage.getItem('userInfo')
           ? JSON.parse(sessionStorage.getItem('userInfo')).token
           : null;
-      this.socket = io(`${process.env.VUE_APP_BASE_API}/scoket?token=${token}`);
+      this.socket = io(`${process.env.VUE_APP_BASE_API}/scoket?token=${token}`,{
+        transports: ['websocket'],
+        withCredentials: false
+      });
       this.socket.on('connect', () => {
-        this.socket.emit('api/scoket', this.id,this.term.cols, this.term.rows);
+        this.socket.emit('api/scoket', this.id,this.term.cols, this.term.rows,this.hostpwd);
       });
       this.socket.on('socket_res', (data) => {
         console.log(data);

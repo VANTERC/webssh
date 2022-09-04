@@ -14,7 +14,7 @@ module.exports = {
       '.sass'
     ],
   },
-  key: '123456789abcdefg',
+  key: 'abcdefg123456789',
   iv: 'abcdefg123456789',
   mysql: {
     // 单数据库信息配置
@@ -68,6 +68,7 @@ module.exports = {
   },
   cors: {
     origin:'*', // 解决跨域问题
+    credentials: true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
   },
   io: {

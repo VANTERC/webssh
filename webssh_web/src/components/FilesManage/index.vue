@@ -24,7 +24,7 @@
         <a-upload
           name="file"
           :showUploadList="false"
-          :data="{id:id,path:fullPath}"
+          :data="{id:id,path:fullPath,pwd:hostPassword}"
           :multiple="false"
           :action="actionUrl"
           :headers="headers"
@@ -160,6 +160,10 @@
       id: {
         type: Number,
         default: null
+      },
+      hostPassword: {
+        type: String,
+        default: ''
       }
     },
     watch: {
@@ -214,7 +218,8 @@
               let data = {
                 id: _this.id,
                 path: _this.fullPath,
-                dirName: dirName
+                dirName: dirName,
+                pwd: _this.hostPassword
               };
               _this.$api.servers.deleteHostDir(data).then(res=>{
                 resolve();
@@ -233,7 +238,8 @@
           id: this.id,
           path: this.fullPath,
           odlName: this.odlName,
-          newName: this.newName
+          newName: this.newName,
+          pwd: this.hostPassword
         };
         this.$api.servers.renameFileOrDir(data).then(res=>{
           this.$message.success(res.msg);
@@ -251,7 +257,8 @@
         let data = {
           id: this.id,
           path: this.fullPath,
-          dirName: this.dirName
+          dirName: this.dirName,
+          pwd: this.hostPassword
         };
         this.$api.servers.createHostDir(data).then(res=>{
           this.$message.success(res.msg);
@@ -276,7 +283,8 @@
               let data = {
                 id:_this.id,
                 path: _this.fullPath,
-                fileName: fileName
+                fileName: fileName,
+                pwd: _this.hostPassword
               };
               _this.$api.servers.deleteHostFile(data).then(res=>{
                 resolve();
@@ -294,7 +302,8 @@
         let data = {
           id:this.id,
           path: this.fullPath,
-          fileName: fileName
+          fileName: fileName,
+          pwd: this.hostPassword
         };
         this.$api.servers.downloadHostFile(data).then(blob => {
           var downloadElement = document.createElement('a');
@@ -338,7 +347,8 @@
         this.fileTableLoading = true;
         let data = {
           id: this.id,
-          path: path
+          path: path,
+          pwd: this.hostPassword
         };
         this.$api.servers.readHostFiles(data).then(res=>{
           if(this.showHideFiles){

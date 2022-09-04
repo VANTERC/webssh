@@ -1,6 +1,6 @@
 const Service = require('egg').Service;
-const sftpClient = require('ssh2-sftp-client');
 const { Client } = require('ssh2');
+const paths = require('path');
 const fs = require('fs')
 
 class SSHService extends Service {
@@ -21,9 +21,6 @@ class SSHService extends Service {
   }
 
   async readFiles(ip,path,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       const conn = new Client();
       conn.on('ready', () => {
@@ -33,26 +30,26 @@ class SSHService extends Service {
             if (err) { resolve(err) }
             if(list){
               resolve(list)
+              conn.end();
             }else{
               resolve([])
+              conn.end();
             }
           });
         });
       }).on('error', () => {
         resolve([])
+        conn.end();
       }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
+        password: password
       });
     })
   }
 
   async uploadFile(file,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       const conn = new Client();
       let remotePath = '..'+(path=== '/'? path : path+'/')+file.filename
@@ -69,147 +66,155 @@ class SSHService extends Service {
         });
       }).on('error', () => {
         resolve(100)
+        conn.end();
       }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
+        password: password
       });
     })
   }
 
   async downloadFile(fileName,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
-      const sftp = new sftpClient();
-      let dst = fs.createWriteStream('./.repos/filestream')
+      const conn = new Client();
       let remotePath = '..'+(path=== '/'? path : path+'/')+fileName
-      sftp.connect({
+      console.log(remotePath);
+      conn.on('ready', () => {
+        conn.sftp(function(err, sftp){
+          if(err){
+            then(err);
+          }else{
+            let rstream = sftp.createReadStream(remotePath);
+            let wstream = fs.createWriteStream(paths.join('','.repos','filestream'));
+            rstream.pipe(wstream);
+            rstream.on('error', function (err) { 
+              console.log(err.message);
+              conn.end();
+              rstream.destroy();
+              wstream.destroy();
+            });
+            rstream.on('end', function () {
+                conn.end();
+            });
+            wstream.on('finish', function () {
+              resolve(200)
+              conn.end();
+            });
+          }
+        });
+      }).on('error', () => {
+        resolve(100)
+        conn.end();
+      }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
-      }).then(() => {
-        return sftp.get(remotePath, dst);
-      })
-      .then(() => {
-        resolve(200)
-        sftp.end();
-      })
-      .catch(err => {
-        resolve(err.message)
-        console.error(err.message);
+        password: password
       });
     })
   }
 
   async deleteFile(fileName,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       let remoteFile = '..'+(path=== '/'? path : path+'/')+fileName
-      const sftp = new sftpClient();
-      sftp.connect({
+      const conn = new Client();
+      conn.on('ready', () => {
+        conn.exec('rm -rf '+remoteFile,function(err, result){
+          resolve(200)
+          conn.end();
+        })
+      }).on('error', () => {
+        resolve(100)
+        conn.end();
+      }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
-      })
-      .then(() => {
-        return sftp.delete(remoteFile);
-      })
-      .then(() => {
-        resolve(200)
-        return sftp.end();
-      })
-      .catch(err => {
-        resolve(err.message)
-        console.error(err.message);
+        password: password
       });
     })
   }
 
   async createDir(dirName,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       let remoteDir = '..'+(path=== '/'? path : path+'/')+dirName
-      const sftp = new sftpClient();
-      sftp.connect({
+      const conn = new Client();
+      conn.on('ready', () => {
+        conn.sftp(function(err, sftp){
+          if(err){
+            then(err);
+          }else{
+            sftp.mkdir(remoteDir, function(err, result){
+              resolve(200)
+              conn.end();
+            });
+          }
+        });
+      }).on('error', () => {
+        resolve(100)
+        conn.end();
+      }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
-      })
-      .then(() => {
-        return sftp.mkdir(remoteDir,true);
-      })
-      .then(() => {
-        resolve(200)
-        return sftp.end();
-      })
-      .catch(err => {
-        resolve(err.message)
-        console.error(err.message);
+        password: password
       });
     })
   }
 
   async deleteDir(dirName,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       let remoteDir = '..'+(path=== '/'? path : path+'/')+dirName
-      const sftp = new sftpClient();
-      sftp.connect({
+      const conn = new Client();
+      conn.on('ready', () => {
+        conn.sftp(function(err, sftp){
+          if(err){
+            then(err);
+          }else{
+            sftp.rmdir(remoteDir, function(err, result){
+              resolve(200)
+              conn.end();
+            });
+          }
+        });
+      }).on('error', () => {
+        resolve(100)
+        conn.end();
+      }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
-      })
-      .then(() => {
-        return sftp.rmdir(remoteDir,true);
-      })
-      .then(() => {
-        resolve(200)
-        return sftp.end();
-      })
-      .catch(err => {
-        resolve(err.message)
-        console.error(err.message);
+        password: password
       });
     })
   }
 
   async renameFileOrDir(odlName,newName,path,ip,password,port,username){
-    let iv = this.app.config.iv;
-    let key = this.app.config.key;
-    let pwd = this.ctx.helper.aesDecrypt('',key,iv,password)
     return new Promise((resolve,reject) => {
       let from = '..'+(path=== '/'? path : path+'/')+odlName
       let to = '..'+(path=== '/'? path : path+'/')+newName
-      const sftp = new sftpClient();
-      sftp.connect({
+      const conn = new Client();
+      conn.on('ready', () => {
+        conn.sftp(function(err, sftp){
+          if(err){
+            then(err);
+          }else{
+            sftp.rename(from,to, function(err, result){
+              resolve(200)
+              conn.end();
+            });
+          }
+        });
+      }).on('error', () => {
+        resolve(100)
+        conn.end();
+      }).connect({
         host: ip,
         port: port,
         username: username,
-        password: pwd
-      })
-      .then(() => {
-        return sftp.rename(from,to);
-      })
-      .then(() => {
-        resolve(200)
-        return sftp.end();
-      })
-      .catch(err => {
-        resolve(err.message)
-        console.error(err.message);
+        password: password
       });
     })
   }

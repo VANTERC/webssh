@@ -1,15 +1,6 @@
 const crypto = require('crypto');
 const moment = require('moment');
-let hostpwd = '';
 module.exports = {
-  setHostpwd(e){
-    const iv = this.app.config.iv;
-    const key = this.app.config.key;
-    hostpwd =  this.aesEncrypt(key,iv,e)
-  },
-  getHostpwd(){
-    return hostpwd
-  },
   formatBytes(a, b) {
     if (0 == a) return "0 B";
     let c = 1024,

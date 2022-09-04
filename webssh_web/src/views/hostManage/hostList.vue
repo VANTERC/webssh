@@ -271,6 +271,28 @@
         };
         this.$api.servers.SSHVerify(data).then(res=>{
           if(res.data){
+            let hostdatas = sessionStorage.HOSTDATA?JSON.parse(sessionStorage.HOSTDATA):[]
+            let hostObj = {
+              hostId:this.selectHostObj.id,
+              host: this.selectHostObj.hostIp,
+              username: this.selectHostObj.rootName,
+              password: this.host_password
+            }
+           if(hostdatas.length>0){
+            if(hostdatas.some((e)=>{return e.host === this.selectHostObj.hostIp})){
+              hostdatas.map(r=>{
+                if(r.host === this.selectHostObj.hostIp){
+                  r = hostObj
+                }
+              })
+            }else{
+              hostdatas.push(hostObj)
+            }
+           }else{
+            hostdatas.push(hostObj)
+           }
+           
+            sessionStorage.setItem('HOSTDATA',JSON.stringify(hostdatas))
             this.$message.success('验证成功！');
             this.sshVerifyLoading = false;
             this.passwordVisible = false;

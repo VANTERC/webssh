@@ -6,8 +6,6 @@ class SSHController extends Controller {
     const { sshObj } = ctx.request.body;
     const res = await ctx.service.ssh.SSHVerify(sshObj);
     if(res.state){
-      // 临时保存密码
-      ctx.helper.setHostpwd(sshObj.password)
       ctx.body = {
         code: '200',
         data: res.state,
