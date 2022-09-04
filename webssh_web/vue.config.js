@@ -11,7 +11,7 @@ const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
 
 module.exports = {
   // 部署应用时的基本 URL
-  publicPath: '/',
+  publicPath: '/webssh/',
   // build时构建/文件的目录 构建时传入 --no-clean 可关闭该行为
   outputDir: 'dist',
   // build时放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
@@ -97,19 +97,19 @@ module.exports = {
       .set('utils', resolve('src/utils'))
       .set('views', resolve('src/views'));
 
-    if (process.env.NODE_ENV === 'production') {
-      // 启用gzip压缩 需要nginx配置
-      config.plugin('compressionPlugin').use(
-        new CompressionPlugin({
-          filename: '[path].gz[query]',
-          algorithm: 'gzip',
-          test: productionGzipExtensions, // 处理所有匹配此 {RegExp} 的资源
-          threshold: 10240, // 只处理比这个值大的资源。按字节计算
-          minRatio: 0.8, // 只有压缩率比这个值小的资源才会被处理
-          deleteOriginalAssets: true // 是否删除原资源
-        })
-      );
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //   // 启用gzip压缩 需要nginx配置
+    //   config.plugin('compressionPlugin').use(
+    //     new CompressionPlugin({
+    //       filename: '[path].gz[query]',
+    //       algorithm: 'gzip',
+    //       test: productionGzipExtensions, // 处理所有匹配此 {RegExp} 的资源
+    //       threshold: 10240, // 只处理比这个值大的资源。按字节计算
+    //       minRatio: 0.8, // 只有压缩率比这个值小的资源才会被处理
+    //       deleteOriginalAssets: true // 是否删除原资源
+    //     })
+    //   );
+    // }
   },
   // 所有 webpack-dev-server 的选项都支持 https://webpack.js.org/configuration/dev-server/
   devServer: {
