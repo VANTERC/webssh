@@ -9,3 +9,4 @@ mysql -e "use mysql; grant all privileges on *.* to '$MARIADB_USER'@'%' identifi
 h=$(hostname)
 mysql -e "use mysql; update user set password=password('$MARIADB_PASS') where user='$MARIADB_USER' and host='$h';"
 mysql -e "flush privileges;"
+mysql -e "create database webssh default charset=utf8;"

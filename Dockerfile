@@ -6,9 +6,8 @@ RUN yum -y install git
 RUN yum -y install wget
 
 RUN yum install -y mariadb-server
-ENV MARIADB_USER webssh
-ENV MARIADB_PASS webssh@123
-ENV LC_ALL en_US.UTF-8
+ENV MARIADB_USER WEBSSH
+ENV MARIADB_PASS WEBSSH_PASSWORD
 ADD db_init.sh /root/db_init.sh
 RUN chmod 775 /root/db_init.sh
 RUN /root/db_init.sh
@@ -39,11 +38,13 @@ RUN npm install && npm run build && \
     rm -rf /usr/local/nginx/html/* && \
     cp -a dist/* /usr/local/nginx/html/
 
-WORKDIR /webssh/webssh_api
-
-
 EXPOSE 80
 EXPOSE 3306
 
+# WORKDIR /webssh/webssh_api
+# RUN npm install && npm run start
+
 ADD setup.sh /root/setup.sh
 RUN chmod 775 /root/setup.sh
+
+CMD [ "/root/setup.sh" ]
