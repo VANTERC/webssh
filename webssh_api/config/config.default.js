@@ -64,7 +64,7 @@ module.exports = {
       enable: false,
       ignoreJSON: true
     },
-    domainWhiteList: ['http://localhost:8077','http://localhost:3000','http://localhost:9999'],//允许访问接口的白名单
+    domainWhiteList: ['*'],//允许访问接口的白名单
   },
   cors: {
     origin:'*', // 解决跨域问题
@@ -91,7 +91,7 @@ module.exports = {
   cluster: {
     listen: {
       port: 7001,
-      //hostname: '0.0.0.0', // 不建议设置 hostname 为 '0.0.0.0'，它将允许来自外部网络和来源的连接，请在知晓风险的情况下使用
+      hostname: '0.0.0.0', // 不建议设置 hostname 为 '0.0.0.0'，它将允许来自外部网络和来源的连接，请在知晓风险的情况下使用
       // path: '/var/run/egg.sock',
     }
   }
