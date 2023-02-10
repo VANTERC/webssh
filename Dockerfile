@@ -1,13 +1,11 @@
 FROM centos:7
-
+# please use docker buildx build --platform linux/amd64,linux/arm64 .
 RUN curl -fsSL https://rpm.nodesource.com/setup_16.x | bash -
 RUN yum -y install nodejs
 RUN yum -y install git
 RUN yum -y install wget
 
 RUN yum install -y mariadb-server
-# ENV MARIADB_USER root
-# ENV MARIADB_PASS ROOT_PASSWORD
 ADD db_init.sh /root/db_init.sh
 RUN chmod 775 /root/db_init.sh
 RUN /root/db_init.sh
@@ -39,7 +37,6 @@ RUN npm install && npm run build && \
     cp -a dist/* /usr/local/nginx/html/
 
 EXPOSE 80
-EXPOSE 3306
 EXPOSE 7001
 
 ADD setup.sh /root/setup.sh
