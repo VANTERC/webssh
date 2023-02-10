@@ -32,7 +32,7 @@
 
 ## Docker安装
 ```bash
-docker run -d -p 8080:80 -p 7001:7001 --restart always --name webssh vanterc/webssh
+docker run -d -p 8080:80 --restart always --name webssh vanterc/webssh
 ```
 
 ## 本地运行
