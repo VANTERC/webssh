@@ -38,7 +38,6 @@ RUN npm install && npm run build && \
     cp -a dist/* /usr/local/nginx/html/
 
 EXPOSE 80
-EXPOSE 7001
 
 ADD setup.sh /root/setup.sh
 RUN chmod 775 /root/setup.sh
