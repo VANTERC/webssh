@@ -6,7 +6,7 @@ module.exports = {
   // 数据库名称
   database:'webssh',
   // 账号
-  username: 'WEBSSH',
+  username: 'root',
   // 密码
-  password:'WEBSSH_PASSWORD'
+  password:'ROOT_PASSWORD'
 }
