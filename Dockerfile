@@ -6,8 +6,8 @@ RUN yum -y install git
 RUN yum -y install wget
 
 RUN yum install -y mariadb-server
-ENV MARIADB_USER root
-ENV MARIADB_PASS ROOT_PASSWORD
+# ENV MARIADB_USER root
+# ENV MARIADB_PASS ROOT_PASSWORD
 ADD db_init.sh /root/db_init.sh
 RUN chmod 775 /root/db_init.sh
 RUN /root/db_init.sh
