@@ -42,9 +42,6 @@ EXPOSE 80
 EXPOSE 3306
 EXPOSE 7001
 
-WORKDIR /webssh/webssh_api
-RUN npm install && npm run start
-
 ADD setup.sh /root/setup.sh
 RUN chmod 775 /root/setup.sh
 
