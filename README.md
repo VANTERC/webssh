@@ -13,8 +13,8 @@
 演示账号: admin/admin
 * 请不要随意修改账号密码
 ```
-![demo1](https://github.com/VANTERC/webssh/blob/main/webssh1.png)
-![demo2](https://github.com/VANTERC/webssh/blob/main/webssh2.png)
+![demo1](https://vanterc.oss-cn-beijing.aliyuncs.com/webssh1.png)
+![demo2](https://vanterc.oss-cn-beijing.aliyuncs.com/webssh2.png)
 ## 环境
 
 * Vue 2.6.11
@@ -63,6 +63,8 @@ npm run start
 npm install
 npm run serve
 ```
+
+注意：初始登录未设密码，后续登录为第一次登录的账号密码
 
 ## License & Copyright
 [AGPL-3.0](https://opensource.org/licenses/AGPL-3.0)

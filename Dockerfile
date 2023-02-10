@@ -1,5 +1,6 @@
 FROM centos:7
-# please use docker buildx build --platform linux/amd64,linux/arm64 .
+# please use docker build -t webssh . --platform linux/amd64
+# docker tag 6b1cb3376aff vanterc/webssh:latest
 RUN curl -fsSL https://rpm.nodesource.com/setup_16.x | bash -
 RUN yum -y install nodejs
 RUN yum -y install git
