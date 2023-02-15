@@ -1,6 +1,6 @@
 module.exports = {
   // 数据库地址
-  host:'localhost',
+  host:'host.docker.internal',
   // 数据库端口
   port: 3306,
   // 数据库名称
