@@ -1,3 +1,4 @@
+#!/bin/bash
 openrc
 
 touch /run/openrc/softlevel
@@ -7,3 +8,5 @@ touch /run/openrc/softlevel
 rc-service mariadb start
 
 mysql -e "create database webssh default charset=utf8mb4;"
+
+nginx -g "daemon off;"
