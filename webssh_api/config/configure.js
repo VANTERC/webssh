@@ -8,5 +8,5 @@ module.exports = {
   // 账号
   username: 'root',
   // 密码
-  password:''
+  password:'123456'
 }
