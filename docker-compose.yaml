@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  main:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: webssh
+    restart: on-failure:3
+    depends_on:
+      websshdb:
+        condition: service_healthy
+    networks:
+      webssh_network:
+    ports:
+      - "8080:80"
+      - "7001:7001"
+    command: 
+      ["npm", "start"]
+
+  websshdb:
+    image: mysql:5.7
+    container_name: websshdb
+    restart: on-failure:3
+    networks:
+      webssh_network:
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+      - --explicit_defaults_for_timestamp=true
+    ports:
+      - "3306:3306"
+    platform: linux/x86_64
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=webssh
+networks:
+  webssh_network:

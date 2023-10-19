@@ -30,11 +30,6 @@
 - **文件管理**: 主机文件在线上传下载、创建文件夹、支持重命名
 - **安全管理**: 只保存服务器信息，不在任何地方保存服务器密码
 
-## Docker安装
-```bash
-docker run -d -p 8080:80 -p 7001:7001 --restart always --name webssh vanterc/webssh
-```
-
 ## 本地运行
 1. 准备好你的mysql数据库(新建一个Utf8字符集,名称为webssh的数据库,无需创建表，系统会自动创建)
 
@@ -65,6 +60,14 @@ npm run serve
 ```
 
 注意：初始登录未设密码，后续登录为第一次登录的账号密码
+
+## Docker部署
+项目根目录
+```bash
+docker-compose up -d
+```
+注意：请自行修改数据库账号密码
+
 
 ## License & Copyright
 [AGPL-3.0](https://opensource.org/licenses/AGPL-3.0)
